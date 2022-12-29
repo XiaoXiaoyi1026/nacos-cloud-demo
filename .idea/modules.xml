@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cloud-demo/cloud-demo.iml" filepath="$PROJECT_DIR$/cloud-demo/cloud-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/cloud-source-demo.iml" filepath="$PROJECT_DIR$/.idea/cloud-source-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/address/nacos-address.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/address/nacos-address.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/nacos-all.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/nacos-all.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/api/nacos-api.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/api/nacos-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/auth/nacos-auth.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/auth/nacos-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/client/nacos-client.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/client/nacos-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/cmdb/nacos-cmdb.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/cmdb/nacos-cmdb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/common/nacos-common.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/common/nacos-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/config/nacos-config.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/config/nacos-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/consistency/nacos-consistency.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/consistency/nacos-consistency.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/console/nacos-console.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/console/nacos-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/core/nacos-core.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/core/nacos-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/distribution/nacos-distribution.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/distribution/nacos-distribution.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/example/nacos-example.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/example/nacos-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/istio/nacos-istio.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/istio/nacos-istio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/naming/nacos-naming.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/naming/nacos-naming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/sys/nacos-sys.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/sys/nacos-sys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nacos-1.4.2/test/nacos-test.iml" filepath="$PROJECT_DIR$/nacos-1.4.2/test/nacos-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-demo/order-service/order-service.iml" filepath="$PROJECT_DIR$/cloud-demo/order-service/order-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-demo/user-service/user-service.iml" filepath="$PROJECT_DIR$/cloud-demo/user-service/user-service.iml" />
+    </modules>
+  </component>
+</project>
