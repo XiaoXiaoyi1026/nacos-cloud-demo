@@ -146,6 +146,7 @@ public class Cluster extends com.alibaba.nacos.api.naming.pojo.Cluster implement
         }
         checkTask = new HealthCheckTask(this);
 
+        // 定时执行心跳检测
         HealthCheckReactor.scheduleCheck(checkTask);
         inited = true;
     }

@@ -497,9 +497,12 @@ public class InstanceController {
         String serviceName = WebUtils.required(request, CommonParams.SERVICE_NAME);
         NamingUtils.checkServiceNameFormat(serviceName);
         Loggers.SRV_LOG.debug("[CLIENT-BEAT] full arguments: beat: {}, serviceName: {}", clientBeat, serviceName);
+
+        // 根据从请求中获取到的命名空间, 服务名称, 集群名称以及ip和端口号, 尝试从nacos集群的注册表中获取该实例
         Instance instance = serviceManager.getInstance(namespaceId, serviceName, clusterName, ip, port);
 
         if (instance == null) {
+            // 心跳实例不存在, 需要重新注册
             if (clientBeat == null) {
                 result.put(CommonParams.CODE, NamingResponseCode.RESOURCE_NOT_FOUND);
                 return result;
@@ -521,6 +524,7 @@ public class InstanceController {
             serviceManager.registerInstance(namespaceId, serviceName, instance);
         }
 
+        // 从注册表中取到服务
         Service service = serviceManager.getService(namespaceId, serviceName);
 
         if (service == null) {
@@ -528,11 +532,13 @@ public class InstanceController {
                     "service not found: " + serviceName + "@" + namespaceId);
         }
         if (clientBeat == null) {
+            // 如果服务不存在心跳则创建心跳
             clientBeat = new RsInfo();
             clientBeat.setIp(ip);
             clientBeat.setPort(port);
             clientBeat.setCluster(clusterName);
         }
+        // 处理服务中实例的心跳
         service.processClientBeat(clientBeat);
 
         result.put(CommonParams.CODE, NamingResponseCode.OK);
