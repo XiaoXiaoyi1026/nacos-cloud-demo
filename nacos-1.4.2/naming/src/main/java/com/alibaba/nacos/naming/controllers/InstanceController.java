@@ -133,13 +133,16 @@ public class InstanceController {
     @PostMapping
     @Secured(parser = NamingResourceParser.class, action = ActionTypes.WRITE)
     public String register(HttpServletRequest request) throws Exception {
+        // 从request中获取服务的namespaceId
         final String namespaceId = WebUtils
                 .optional(request, CommonParams.NAMESPACE_ID, Constants.DEFAULT_NAMESPACE_ID);
+        // 获取服务名称
         final String serviceName = WebUtils.required(request, CommonParams.SERVICE_NAME);
+        // 校验服务名称
         NamingUtils.checkServiceNameFormat(serviceName);
-
+        // 将request中的多个参数封装为Instance对象, Instance即为实例
         final Instance instance = parseInstance(request);
-
+        // 注册实例, 将Instance对象放到注册表中的最底层
         serviceManager.registerInstance(namespaceId, serviceName, instance);
         return "ok";
     }
@@ -465,10 +468,13 @@ public class InstanceController {
     @Secured(parser = NamingResourceParser.class, action = ActionTypes.WRITE)
     public ObjectNode beat(HttpServletRequest request) throws Exception {
 
+        // 准备要返回的json信息
         ObjectNode result = JacksonUtils.createEmptyJsonNode();
         result.put(SwitchEntry.CLIENT_BEAT_INTERVAL, switchDomain.getClientBeatInterval());
 
+        // 从request中获取心跳信息
         String beat = WebUtils.optional(request, "beat", StringUtils.EMPTY);
+        // 解析心跳信息
         RsInfo clientBeat = null;
         if (StringUtils.isNotBlank(beat)) {
             clientBeat = JacksonUtils.toObj(beat, RsInfo.class);
