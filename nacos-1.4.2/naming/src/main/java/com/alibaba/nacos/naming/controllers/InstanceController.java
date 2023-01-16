@@ -384,13 +384,15 @@ public class InstanceController {
     @GetMapping("/list")
     @Secured(parser = NamingResourceParser.class, action = ActionTypes.READ)
     public ObjectNode list(HttpServletRequest request) throws Exception {
-
+        // 解析request中的 namespaceId serviceName
         String namespaceId = WebUtils.optional(request, CommonParams.NAMESPACE_ID, Constants.DEFAULT_NAMESPACE_ID);
         String serviceName = WebUtils.required(request, CommonParams.SERVICE_NAME);
         NamingUtils.checkServiceNameFormat(serviceName);
 
         String agent = WebUtils.getUserAgent(request);
+        // 获取集群信息
         String clusters = WebUtils.optional(request, "clusters", StringUtils.EMPTY);
+        // 客户端的ip和udp端口
         String clientIP = WebUtils.optional(request, "clientIP", StringUtils.EMPTY);
         int udpPort = Integer.parseInt(WebUtils.optional(request, "udpPort", "0"));
         String env = WebUtils.optional(request, "env", StringUtils.EMPTY);
@@ -678,14 +680,16 @@ public class InstanceController {
             int udpPort, String env, boolean isCheck, String app, String tid, boolean healthyOnly) throws Exception {
 
         ClientInfo clientInfo = new ClientInfo(agent);
+        // 创建空的json对象
         ObjectNode result = JacksonUtils.createEmptyJsonNode();
+        // 根据namespaceId和serviceName尝试从注册表获取服务
         Service service = serviceManager.getService(namespaceId, serviceName);
         long cacheMillis = switchDomain.getDefaultCacheMillis();
 
         // now try to enable the push
         try {
             if (udpPort > 0 && pushService.canEnablePush(agent)) {
-
+                // udp服务端记录了客户端的ip和端口以及要监听的服务信息
                 pushService
                         .addClient(namespaceId, serviceName, clusters, agent, new InetSocketAddress(clientIP, udpPort),
                                 pushDataSource, tid, app);
@@ -697,7 +701,9 @@ public class InstanceController {
             cacheMillis = switchDomain.getDefaultCacheMillis();
         }
 
+        // 封装最终结果
         if (service == null) {
+            // 如果服务拉取失败, 直接返回空
             if (Loggers.SRV_LOG.isDebugEnabled()) {
                 Loggers.SRV_LOG.debug("no instance to serve for service: {}", serviceName);
             }
@@ -708,10 +714,12 @@ public class InstanceController {
             return result;
         }
 
+        // 检查服务状态
         checkIfDisabled(service);
 
         List<Instance> srvedIPs;
 
+        // 尝试从服务中得到所有列表
         srvedIPs = service.srvIPs(Arrays.asList(StringUtils.split(clusters, ",")));
 
         // filter ips using selector:
@@ -720,7 +728,7 @@ public class InstanceController {
         }
 
         if (CollectionUtils.isEmpty(srvedIPs)) {
-
+            // 如果集群为空, 也返回空
             if (Loggers.SRV_LOG.isDebugEnabled()) {
                 Loggers.SRV_LOG.debug("no instance to serve for service: {}", serviceName);
             }
@@ -744,11 +752,13 @@ public class InstanceController {
             return result;
         }
 
+        // 将实例分为健康和非健康2种状态
         Map<Boolean, List<Instance>> ipMap = new HashMap<>(2);
         ipMap.put(Boolean.TRUE, new ArrayList<>());
         ipMap.put(Boolean.FALSE, new ArrayList<>());
 
         for (Instance ip : srvedIPs) {
+            // 遍历实例列表, 筛选出健康实例
             ipMap.get(ip.isHealthy()).add(ip);
         }
 
@@ -758,6 +768,7 @@ public class InstanceController {
 
         double threshold = service.getProtectThreshold();
 
+        // 判断健康实例占总实例数的比例
         if ((float) ipMap.get(Boolean.TRUE).size() / srvedIPs.size() <= threshold) {
 
             Loggers.SRV_LOG.warn("protect threshold reached, return all ips, service: {}", serviceName);
