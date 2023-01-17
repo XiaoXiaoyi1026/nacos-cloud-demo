@@ -7,10 +7,12 @@ spring:
     nacos:
       discovery:
         cluster-name: SH # 设置集群名称
-#        ephemeral: false # 设置为永久实例
+    #        ephemeral: false # 设置为永久实例
     sentinel:
       transport:
         dashboard: localhost:8089
+#        配置链路模式, 关闭sentinel_spring_web_context这个统一入口
+#      web-context-unify: false
 logging:
   level:
     cn.itcast: debug
